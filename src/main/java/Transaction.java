@@ -1,6 +1,13 @@
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
-import java.util.Objects;
+
+@ToString
+@EqualsAndHashCode
 
 public abstract class Transaction {
     private final Date date;
@@ -20,24 +27,12 @@ public abstract class Transaction {
         this.amount = amount;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getDate() {
+        return date.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
     }
 
     public abstract boolean isDeposit();
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
-        return amount == that.amount &&
-                date.equals(that.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(date, amount);
-    }
 
 }

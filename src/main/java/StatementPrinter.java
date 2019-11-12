@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +18,13 @@ public class StatementPrinter implements Printer {
 
     @Override
     public void print(List<Transaction> transactions, Date startDate, Date endDate) {
+        LocalDate localStartDate = startDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate localEndDate = endDate.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
         displayer.display(HEADER);
         int balance = transactions.stream()
                 .filter(transaction -> transaction.isDeposit())
@@ -29,13 +38,13 @@ public class StatementPrinter implements Printer {
 
         for (int transactionItem = transactions.size() - 1; transactionItem >= 0; transactionItem--) {
             Transaction tx = transactions.get(transactionItem);
-            if (tx.isDeposit() && tx.getDate().after(startDate) && tx.getDate().before(endDate) ) {
+            if (tx.isDeposit() && (tx.getDate().isAfter(localStartDate) || tx.getDate().isEqual(localStartDate)) &&
+                    (tx.getDate().isBefore(localEndDate) || tx.getDate().isEqual(localEndDate)) ) {
                 displayer.display(getDepositLine(tx, balance));
-                System.out.println(getDepositLine(tx, balance));
             }
-            if (tx.getDate().after(startDate) && tx.getDate().before(endDate)){
+            if ((tx.getDate().isAfter(localStartDate) || tx.getDate().isEqual(localStartDate)) &&
+                    (tx.getDate().isBefore(localEndDate) || tx.getDate().isEqual(localEndDate))){
                 displayer.display(getWithdrawLine(tx, balance));
-                System.out.println(getWithdrawLine(tx, balance));
             }
 
             if(tx.isDeposit()) {

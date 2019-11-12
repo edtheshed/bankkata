@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import static org.mockito.Mockito.*;
 
@@ -22,7 +23,7 @@ public class BankAccountShould {
     @Test
     void print_out_a_statement_of_deposits_and_withdrawals() {
         Calendar calendar1 = Calendar.getInstance();
-        calendar1.set(2012, 00, 10);
+        calendar1.set(2012, Calendar.JANUARY, 10);
         Calendar calendar2 = Calendar.getInstance();
         calendar2.set(2012, 00, 13);
         Calendar calendar3 = Calendar.getInstance();
