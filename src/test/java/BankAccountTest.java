@@ -6,6 +6,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
@@ -44,8 +45,12 @@ public class BankAccountTest {
     @Test
     void can_send_a_transaction_to_printer() {
         bankAccount.deposit(1000);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2019, 12, 25);
+        Transaction transaction = new Deposit(calendar.getTime(), 1000);
 
-        List<Transaction> txList = BankTestUtil.getTransactionList();
+        List<Transaction> txList = Arrays.asList(transaction);
+
 
         when(transactionRepo.getTransactions()).thenReturn(txList);
         bankAccount.printStatement();

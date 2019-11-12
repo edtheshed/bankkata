@@ -5,7 +5,7 @@ public class Deposit extends Transaction {
         super(date, amount);
     }
 
-    boolean isDeposit(){
+    public boolean isDeposit(){
         return true;
     }
 }

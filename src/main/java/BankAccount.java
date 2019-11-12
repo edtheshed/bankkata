@@ -1,3 +1,5 @@
+import java.util.Date;
+
 public class BankAccount {
     private TransactionRepo transactionRepo;
     private Printer printer;
@@ -18,5 +20,10 @@ public class BankAccount {
 
     public void printStatement() {
         printer.print(transactionRepo.getTransactions());
+    }
+
+
+    public void printStatementByDate(Date startDate, Date endDate) {
+        printer.print(transactionRepo.getTransactions(), startDate, endDate);
     }
 }

@@ -7,5 +7,6 @@ public interface TransactionRepo {
     void withdraw(int amount);
 
     List<Transaction> getTransactions();
+
 }
 

@@ -10,6 +10,7 @@ public class MemoryTransactionRepo implements TransactionRepo {
         this.clock = clock;
     }
 
+
     @Override
     public void deposit(int amount) {
         transactions.add(new Deposit(clock.getToday(), amount));
@@ -24,4 +25,5 @@ public class MemoryTransactionRepo implements TransactionRepo {
     public List<Transaction> getTransactions() {
         return transactions;
     }
+
 }
